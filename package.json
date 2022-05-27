@@ -5,6 +5,8 @@
   "author": "Dapp University",
   "homepage": ".",
   "dependencies": {
+    "@ethersproject/abi": "^5.6.2",
+    "@ethersproject/address": "^5.6.0",
     "@truffle/hdwallet-provider": "^1.1.0",
     "babel-polyfill": "6.26.0",
     "babel-preset-env": "1.7.0",
@@ -46,6 +48,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "gh-pages": "^2.2.0"
+    "gh-pages": "^2.2.0",
+    "ipfs-api": "^18.1.1"
   }
 }

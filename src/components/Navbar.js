@@ -19,15 +19,15 @@ class Navbar extends Component {
         <ul className="navbar-nav px-3">
           <li>
             <small id="account">
-              <a target="_blank"
+              {/* <a target="_blank"
                  alt=""
                  className="text-white"
                  rel="noopener noreferrer"
                  href={"https://etherscan.io/address/" + this.props.account}>
                 {this.props.account.substring(0,6)}...{this.props.account.substring(38,42)}
-              </a>
+              </a> */}
             </small>
-            { this.props.account
+            {/* { this.props.account
               ? <img
                   alt=""
                   className='ml-2'
@@ -36,7 +36,7 @@ class Navbar extends Component {
                   src={`data:image/png;base64,${new Identicon(this.props.account, 30).toString()}`}
                 />
               : <span></span>
-            }
+            } */}
           </li>
         </ul>
       </nav>

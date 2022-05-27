@@ -6,19 +6,24 @@ import Web3 from 'web3';
 import './App.css';
 
 const ipfsClient = require('ipfs-http-client')
-const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' }) // leaving out the arguments will default to these values
+const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https',apiPath: '/ipfs/api/v0' }) // leaving out the arguments will default to these values
 
 class App extends Component {
 
   async componentWillMount() {
+    console.log("1")
     await this.loadWeb3()
+    console.log("2")
     await this.loadBlockchainData()
   }
 
   async loadWeb3() {
     if (window.ethereum) {
+      
       window.web3 = new Web3(window.ethereum)
-      await window.ethereum.enable()
+   
+      window.ethereum.enable().then(console.log("done")).catch(e => console.log(e));
+
     }
     else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider)
@@ -29,16 +34,23 @@ class App extends Component {
   }
 
   async loadBlockchainData() {
+    console.log("in")
     const web3 = window.web3
+    console.log("web3", web3)
     // Load account
+    
     const accounts = await web3.eth.getAccounts()
+    console.log("acc",accounts)
     this.setState({ account: accounts[0] })
     // Network ID
     const networkId = await web3.eth.net.getId()
-    const networkData = DStorage.networks[networkId]
+    const networkData = DStorage.networks[5777]
+
+    console.log("net id",networkId,"net data" ,networkData)
     if(networkData) {
       // Assign contract
       const dstorage = new web3.eth.Contract(DStorage.abi, networkData.address)
+      console.log("dstorage",dstorage)
       this.setState({ dstorage })
       // Get files amount
       const filesCount = await dstorage.methods.fileCount().call()
@@ -69,20 +81,20 @@ class App extends Component {
         type: file.type,
         name: file.name
       })
-      console.log('buffer', this.state.buffer)
+      
     }
   }
 
-  uploadFile = description => {
+  uploadFile = async (description) => {
     console.log("Submitting file to IPFS...")
+    let data = this.state.buffer
+    console.log('buffer', data)
 
     // Add file to the IPFS
-    ipfs.add(this.state.buffer, (error, result) => {
-      console.log('IPFS result', result.size)
-      if(error) {
-        console.error(error)
-        return
-      }
+
+    try{
+      const result = await ipfs.add(data) 
+      console.log("postResponse", result);
 
       this.setState({ loading: true })
       // Assign value for the file without extension
@@ -97,10 +109,16 @@ class App extends Component {
        })
        window.location.reload()
       }).on('error', (e) =>{
-        window.alert('Error')
+        console.log(e)
+        window.alert('Error here')
         this.setState({loading: false})
       })
-    })
+
+    } catch(e){
+      console.log("Error: ", e)
+    }
+
+  
   }
 
   constructor(props) {
