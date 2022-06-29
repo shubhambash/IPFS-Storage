@@ -1,6 +1,6 @@
 const DStorage = artifacts.require('./DStorage.sol')
 
-require('chai')
+require('chai') 
   .use(require('chai-as-promised'))
   .should()
 
