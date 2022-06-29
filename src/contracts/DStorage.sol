@@ -30,7 +30,7 @@ contract DStorage {
   constructor() public {
   }
 
-  function uploadFile(string memory _fileHash, uint _fileSize, string memory _fileType, string memory _fileName, string memory _fileDescription) public {
+  function uploadFile( string memory _fileHash, uint _fileSize, string memory _fileType, string memory _fileName, string memory _fileDescription) public {
     // Make sure the file hash exists
     require(bytes(_fileHash).length > 0);
     // Make sure file type exists

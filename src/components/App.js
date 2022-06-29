@@ -5,6 +5,11 @@ import Main from './Main'
 import Web3 from 'web3';
 import './App.css';
 
+const crypto = require('crypto');
+const algorithm = 'aes-256-cbc';
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
+
 const ipfsClient = require('ipfs-http-client')
 const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https',apiPath: '/ipfs/api/v0' }) // leaving out the arguments will default to these values
 
@@ -45,7 +50,7 @@ class App extends Component {
     // Network ID
     const networkId = await web3.eth.net.getId()
     const networkData = DStorage.networks[5777]
-
+    this.setState({networkId})
     console.log("net id",networkId,"net data" ,networkData)
     if(networkData) {
       // Assign contract
@@ -85,10 +90,35 @@ class App extends Component {
     }
   }
 
+
+
   uploadFile = async (description) => {
     console.log("Submitting file to IPFS...")
     let data = this.state.buffer
     console.log('buffer', data)
+
+
+
+    function encrypt(text) {
+      let cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
+      let encrypted = cipher.update(text);
+      encrypted = Buffer.concat([encrypted, cipher.final()]);
+      return { iv: iv.toString('hex'), encryptedData: Buffer(encrypted), encryptedData1 : encrypted.toString('hex') };
+     }
+
+
+     var test = iv.toString('hex')
+
+
+  
+    let endata = encrypt(data)
+     console.log("ENCRYPTED DATA",endata)
+
+     
+
+
+
+    
 
     // Add file to the IPFS
 
@@ -138,13 +168,14 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar account={this.state.account} />
+        <Navbar account={this.state.account} network={this.state.networkId}/>
         { this.state.loading
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
           : <Main
               files={this.state.files}
               captureFile={this.captureFile}
               uploadFile={this.uploadFile}
+   
             />
         }
       </div>
