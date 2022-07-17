@@ -79,45 +79,7 @@ function Main(props) {
           </div>
 
 
-          <div id="uploadWrapper" onClick={(e) => {setDecryptIcons(false)}}>
-          
-
-          {decryptIcons ? 
-            
-            (<>
-
-            <div className = "uploadIcons">
-              <h2>Decrypt File</h2>
-            </div>
-            <div className = "uploadIcons">
-              <img src={decryptIcon} id="addIcon"/>
-            </div>
-              
-
-            </>) 
-            
-            : 
-            
-            (<>
-            
-            {/* <form className='uploadForm' onSubmit={(event) => {
-                event.preventDefault()
-                console.log("uploadform1")
-                props.uploadFile1()
-              }} >
-                  <div className="uploadWrapper form-group">
-                    <br></br>
-
-                    <input type="file" onChange={props.captureFile1} className="fileInput text-monospace mb-3"/>
-                    
-                  </div>
-                
-                <button type="submit" className="uploadBtn btn-block" onClick={(e) => {setDecryptIcons(true)}}><b>Decrypt</b></button>
-              </form>
-             */}
-            </>)}
-
-          </div>
+         
 
           </div>
           <p>&nbsp;</p>

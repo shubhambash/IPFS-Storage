@@ -49,7 +49,7 @@ class App extends Component {
     this.setState({ account: accounts[0] })
     // Network ID
     const networkId = await web3.eth.net.getId()
-    const networkData = DStorage.networks[5777]
+    const networkData = DStorage.networks[networkId]
     this.setState({networkId})
     console.log("net id",networkId,"net data" ,networkData)
     if(networkData) {

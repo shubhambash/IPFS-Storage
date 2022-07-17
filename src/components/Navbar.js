@@ -65,7 +65,7 @@ class Navbar extends Component {
   
 
         <li class="nav-item px-5">
-          <a class="nav-link active" aria-current="page" href="/about"><b>About</b></a>
+          <a class="nav-link active" aria-current="page" href="https://docs.ipfs.io/concepts/what-is-ipfs/"><b>About</b></a>
         </li>
   
   
